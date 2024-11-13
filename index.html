@@ -74,39 +74,76 @@
 							<li><a href="#" class="button">Full Portfolio</a></li>
 						</ul>
 					</section>
+					
+						<!-- Three -->
 
-				<!-- Three -->
-					<section id="three">
-						<h2>Get In Touch</h2>
-						<div class="row">
-							<div class="col-8 col-12-small">
-								<form method="post" action="#">
-									<div class="row gtr-uniform gtr-50">
-										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
-										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
-										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4"></textarea></div>
-									</div>
-								</form>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</div>
-							<div class="col-4 col-12-small">
-								<ul class="labeled-icons">
-									<li>
-										<h3 class="icon solid fa-home"><span class="label">Address</span></h3>
-										Biodiversity Research Center, Room 305<br />
-										2212 Main Mall<br />
-										Vancouver, British Columbia, Canada
-									</li>
-									<li>
-										<h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
-										milos.simovic~at~botany.ubc.ca
-									</li>
-								</ul>
-							</div>
-						</div>
-					</section>
+<section id="three">
+    <h2>Get In Touch</h2>
+    <div class="row">
+        <div class="col-8 col-12-small">
+            <form id="contactForm">
+                <div class="row gtr-uniform gtr-50">
+                    <div class="col-6 col-12-xsmall">
+                        <input type="text" name="name" id="name" placeholder="Name" required />
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        <input type="email" name="email" id="email" placeholder="Email" required />
+                    </div>
+                    <div class="col-12">
+                        <textarea name="message" id="message" placeholder="Message" rows="4" required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <ul class="actions">
+                            <li><button type="button" id="sendMessageBtn">Send Message</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+            <div id="responseMessage" style="margin-top: 10px;"></div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for AJAX -->
+<script>
+    document.getElementById('sendMessageBtn').addEventListener('click', function () {
+        const form = document.getElementById('contactForm');
+        const formData = new FormData(form);
+        
+        // Send form data using Fetch API
+        fetch('send_message.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('responseMessage').innerText = data;
+            form.reset(); // Reset form fields after submission
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('responseMessage').innerText = 'Failed to send message. Please try again later.';
+        });
+    });
+</script>
+
+        <div class="col-4 col-12-small">
+            <ul class="labeled-icons">
+                <li>
+                    <h3 class="icon solid fa-home"><span class="label">Address</span></h3>
+                    Biodiversity Research Center, Room 305<br />
+                    2212 Main Mall<br />
+                    Vancouver, British Columbia, Canada
+                </li>
+                <li>
+                    <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
+                    milos.simovic~at~botany.ubc.ca
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
 
 				<!-- Four -->
 				<!--
