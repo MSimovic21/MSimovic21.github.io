@@ -78,64 +78,6 @@
 						<!-- Three -->
 
 <section id="three">
-    <h2>Get In Touch</h2>
-    <div class="row">
-        <div class="col-8 col-12-small">
-            <form id="contactForm">
-                <div class="row gtr-uniform gtr-50">
-                    <div class="col-6 col-12-xsmall">
-                        <input type="text" name="name" id="name" placeholder="Name" required />
-                    </div>
-                    <div class="col-6 col-12-xsmall">
-                        <input type="email" name="email" id="email" placeholder="Email" required />
-                    </div>
-                    <div class="col-12">
-                        <textarea name="message" id="message" placeholder="Message" rows="4" required></textarea>
-                    </div>
-                    <div class="col-12">
-                        <button type="button" id="sendMessageBtn">Send Message</button>
-                    </div>
-                </div>
-            </form>
-            <div id="responseMessage" style="margin-top: 10px; color: green;"></div>
-            <div id="errorMessage" style="margin-top: 10px; color: red;"></div>
-        </div>
-    </div>
-</section>
-
-<!-- JavaScript for AJAX Form Submission -->
-
-<script>
-    document.getElementById('sendMessageBtn').addEventListener('click', function () {
-        const form = document.getElementById('contactForm');
-        const formData = new FormData(form);
-        const responseMessage = document.getElementById('responseMessage');
-        const errorMessage = document.getElementById('errorMessage');
-
-        responseMessage.textContent = '';
-        errorMessage.textContent = '';
-
-        fetch('send_message.php', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                responseMessage.textContent = data.message;
-                form.reset();
-            } else {
-                errorMessage.textContent = data.message;
-            }
-        })
-        .catch(error => {
-            errorMessage.textContent = 'An error occurred. Please try again later.';
-            console.error('Fetch error:', error);
-        });
-    });
-</script>
-
-
         <div class="col-4 col-12-small">
             <ul class="labeled-icons">
                 <li>
