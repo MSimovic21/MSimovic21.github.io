@@ -93,39 +93,48 @@
                         <textarea name="message" id="message" placeholder="Message" rows="4" required></textarea>
                     </div>
                     <div class="col-12">
-                        <ul class="actions">
-                            <li><button type="button" id="sendMessageBtn">Send Message</button></li>
-                        </ul>
+                        <button type="button" id="sendMessageBtn">Send Message</button>
                     </div>
                 </div>
             </form>
-            <div id="responseMessage" style="margin-top: 10px;"></div>
+            <div id="responseMessage" style="margin-top: 10px; color: green;"></div>
+            <div id="errorMessage" style="margin-top: 10px; color: red;"></div>
         </div>
     </div>
 </section>
 
-<!-- JavaScript for AJAX -->
+<!-- JavaScript for AJAX Form Submission -->
+
 <script>
     document.getElementById('sendMessageBtn').addEventListener('click', function () {
         const form = document.getElementById('contactForm');
         const formData = new FormData(form);
-        
-        // Send form data using Fetch API
+        const responseMessage = document.getElementById('responseMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        responseMessage.textContent = '';
+        errorMessage.textContent = '';
+
         fetch('send_message.php', {
             method: 'POST',
             body: formData,
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            document.getElementById('responseMessage').innerText = data;
-            form.reset(); // Reset form fields after submission
+            if (data.success) {
+                responseMessage.textContent = data.message;
+                form.reset();
+            } else {
+                errorMessage.textContent = data.message;
+            }
         })
         .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('responseMessage').innerText = 'Failed to send message. Please try again later.';
+            errorMessage.textContent = 'An error occurred. Please try again later.';
+            console.error('Fetch error:', error);
         });
     });
 </script>
+
 
         <div class="col-4 col-12-small">
             <ul class="labeled-icons">
